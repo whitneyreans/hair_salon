@@ -11,8 +11,8 @@ class Client
     clients = []
     returned_clients.each() do |client|
       name = client.fetch("name")
-      styist_id = client.fetch("stylist_id").to_i()
-      clients.push(client.new({:name => name, :stylist_id => stylist_sid}))
+      stylist_id = client.fetch("stylist_id").to_i()
+      clients.push(Client.new({:name => name, :stylist_id => stylist_id}))
     end
     clients
   end
@@ -22,6 +22,6 @@ class Client
   end
 
   define_method(:==) do |another_client|
-    self.name().==(another_client.name()).&(self.id().==(another_client.id()))
+    self.name().==(another_client.name()).&(self.stylist_id().==(another_client.stylist_id()))
   end
 end

@@ -1,15 +1,4 @@
-require('rspec')
-require('pg')
-require('stylist')
-require('client')
-
-DB = PG.connect({:dbname => 'hair_salon_test'})
-
-RSpec.configure do |config|
-  config.after(:each) do
-    DB.exec("DELETE FROM clients *;")
-  end
-end
+require('spec_helper')
 
 describe(Client) do
   describe(".all") do
@@ -20,30 +9,30 @@ describe(Client) do
 
   describe("#name") do
     it("tells you the client's name") do
-      client = Client.new({:name => "Mary Sue", :client_id => 1})
+      client = Client.new({:name => "Mary Sue", :stylist_id => 1})
       expect(client.name()).to(eq("Mary Sue"))
     end
   end
 
-  describe("#client_id") do
+  describe("#stylist_id") do
     it("lets you read the stylist ID for that client") do
-      test_client = Client.new({:name => "Barbara Bush", :client_id => 1})
-      expect(test_stylist.list_id()).to(eq(1))
+      test_client = Client.new({:name => "Barbara Bush", :stylist_id => 1})
+      expect(test_client.stylist_id()).to(eq(1))
     end
   end
 
   describe("#save") do
     it("lets you save clients to the database") do
-      client = Client.new({:name => "Mary Sue", :client_id => 1})
+      client = Client.new({:name => "Mary Sue", :stylist_id => 1})
       client.save()
-      expect(client.all()).to(eq([client]))
+      expect(Client.all()).to(eq([client]))
     end
   end
 
   describe("#==") do
     it("is the same client if they has the same name") do
-      client1 = client.new({:name => "Mary Sue", :client_id => 1})
-      client2 = client.new({:name => "Mary Sue", :client_id => 1})
+      client1 = Client.new({:name => "Mary Sue", :stylist_id => 1})
+      client2 = Client.new({:name => "Mary Sue", :stylist_id => 1})
       expect(client1).to(eq(client2))
     end
   end
